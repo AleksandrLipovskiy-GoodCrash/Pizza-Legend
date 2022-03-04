@@ -92,7 +92,12 @@ body {
 
 #game {
   position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  width: 352px;
+  height: 198px;
+  margin: 0 auto;
+  outline: 1px solid #fff;
+  transform: scale(3) translateY(42.5%);
+}
+#game canvas {
+  image-rendering: pixelated;
 }
