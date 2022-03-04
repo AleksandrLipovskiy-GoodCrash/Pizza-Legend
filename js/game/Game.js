@@ -1,4 +1,5 @@
 import OverworldMap from '../core/OverworldMap.js';
+import DirectionInput from '../core/DirectionInput.js';
 import OverworldMaps from './OverworldMaps.js';
 
 export default class Game {
@@ -17,6 +18,14 @@ export default class Game {
       //Draw Lower layer
       this.map.drawLowerImage(this.ctx);
 
+      //Draw Game Objects
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.update({
+          arrow: this.directionInput.direction
+        })
+        object.sprite.draw(this.ctx);
+      })
+
       //Draw Upper layer
       this.map.drawUpperImage(this.ctx);
 
@@ -29,6 +38,9 @@ export default class Game {
 
   init() {
     this.map = new OverworldMap(OverworldMaps.DemoRoom);
+
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
 
     this.startGameLoop();
   }
