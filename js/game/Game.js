@@ -5,8 +5,8 @@ import OverworldMaps from './OverworldMaps.js';
 export default class Game {
   constructor(config) {
     this.element = config.element;
-    this.canvas = this.element.querySelector(".game-canvas");
-    this.ctx = this.canvas.getContext("2d");
+    this.canvas = this.element.querySelector('.game-canvas');
+    this.ctx = this.canvas.getContext('2d');
     this.map = null;
   }
 
@@ -15,19 +15,26 @@ export default class Game {
       //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      //Draw Lower layer
-      this.map.drawLowerImage(this.ctx);
+      //Establish the camera person
+      const cameraPerson = this.map.gameObjects.hero;
 
-      //Draw Game Objects
+      //Update all objects
       Object.values(this.map.gameObjects).forEach(object => {
         object.update({
           arrow: this.directionInput.direction
         })
-        object.sprite.draw(this.ctx);
+      })
+
+      //Draw Lower layer
+      this.map.drawLowerImage(this.ctx, cameraPerson);
+
+      //Draw Game Objects
+      Object.values(this.map.gameObjects).forEach(object => {
+        object.sprite.draw(this.ctx, cameraPerson);
       })
 
       //Draw Upper layer
-      this.map.drawUpperImage(this.ctx);
+      this.map.drawUpperImage(this.ctx, cameraPerson);
 
       requestAnimationFrame(() => {
         step();
